@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV.FORM — Dark Techwear</title>
+    <meta name="description" content="WAV.FORM — Where sound meets structure. Dark techwear clothing for the underground. Brutalist streetwear engineered for the night.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <!-- Scan Lines Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="loader-glitch" data-text="WAV.FORM">WAV.FORM</div>
+            <div class="loader-bar">
+                <div class="loader-bar-fill" id="loaderBar"></div>
+            </div>
+            <div class="loader-text">LOADING FREQUENCY...</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" id="navLogo">WAV<span class="accent">.</span>FORM</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#products" class="nav-link">PRODUCTS</a></li>
+                <li><a href="#lookbook" class="nav-link">LOOKBOOK</a></li>
+                <li><a href="#about" class="nav-link">ABOUT</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="mood-btn" id="moodBtn" aria-label="Toggle audio">
+                    <span class="mood-icon">
+                        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    </span>
+                    <span class="mood-label">MOOD</span>
+                </button>
+                <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 01-8 0"></path>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <a href="#products" class="mobile-link">PRODUCTS</a>
+            <a href="#lookbook" class="mobile-link">LOOKBOOK</a>
+            <a href="#about" class="mobile-link">ABOUT</a>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3 class="cart-title">YOUR BAG</h3>
+            <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">
+                <p>YOUR BAG IS EMPTY</p>
+                <span>ADD SOME HEAT</span>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">CHECKOUT</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="images/hero.png" alt="WAV.FORM Hero" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag reveal">
+                <span class="tag-line"></span>
+                <span class="tag-text">SS26 COLLECTION</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="hero-line reveal" data-delay="0.1">
+                    <span class="glitch" data-text="WAV.FORM">WAV.FORM</span>
+                </span>
+            </h1>
+            <p class="hero-sub reveal" data-delay="0.3">WHERE SOUND MEETS STRUCTURE</p>
+            <div class="hero-cta reveal" data-delay="0.5">
+                <a href="#products" class="btn-primary" id="heroShopBtn">
+                    <span class="btn-text">SHOP NOW</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="#lookbook" class="btn-outline">VIEW LOOKBOOK</a>
+            </div>
+            <div class="hero-scroll reveal" data-delay="0.7">
+                <div class="scroll-line"></div>
+                <span class="scroll-text">SCROLL</span>
+            </div>
+        </div>
+        <div class="hero-marquee">
+            <div class="marquee-track">
+                <span>WAV.FORM — DARK TECHWEAR — SS26 — UNDERGROUND — WAV.FORM — DARK TECHWEAR — SS26 — UNDERGROUND —&nbsp;</span>
+                <span>WAV.FORM — DARK TECHWEAR — SS26 — UNDERGROUND — WAV.FORM — DARK TECHWEAR — SS26 — UNDERGROUND —&nbsp;</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-header">
+            <span class="section-tag reveal">001</span>
+            <h2 class="section-title reveal">PRODUCTS</h2>
+            <div class="section-line reveal"></div>
+        </div>
+        <div class="products-grid">
+            <div class="product-card reveal" data-name="PHANTOM TACTICAL JACKET" data-price="320" data-img="images/product_jacket.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_jacket.png" alt="Phantom Tactical Jacket" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                    <span class="product-tag">NEW</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">PHANTOM TACTICAL JACKET</h3>
+                    <span class="product-price">$320</span>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-name="SIGNAL CARGO PANTS" data-price="245" data-img="images/product_pants.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_pants.png" alt="Signal Cargo Pants" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">SIGNAL CARGO PANTS</h3>
+                    <span class="product-price">$245</span>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-name="MOLLE TACTICAL VEST" data-price="280" data-img="images/product_vest.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_vest.png" alt="MOLLE Tactical Vest" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                    <span class="product-tag">CORE</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">MOLLE TACTICAL VEST</h3>
+                    <span class="product-price">$280</span>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-name="STEALTH TECH HOODIE" data-price="195" data-img="images/product_hoodie.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_hoodie.png" alt="Stealth Tech Hoodie" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">STEALTH TECH HOODIE</h3>
+                    <span class="product-price">$195</span>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-name="GROUND ZERO BOOTS" data-price="385" data-img="images/product_boots.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_boots.png" alt="Ground Zero Boots" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                    <span class="product-tag">LIMITED</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">GROUND ZERO BOOTS</h3>
+                    <span class="product-price">$385</span>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-name="FREQ SLING BAG" data-price="145" data-img="images/product_vest.png">
+                <div class="product-img-wrap">
+                    <img src="images/product_vest.png" alt="Freq Sling Bag" class="product-img" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">FREQ SLING BAG</h3>
+                    <span class="product-price">$145</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lookbook Section -->
+    <section class="lookbook" id="lookbook">
+        <div class="section-header">
+            <span class="section-tag reveal">002</span>
+            <h2 class="section-title reveal">LOOKBOOK</h2>
+            <div class="section-line reveal"></div>
+        </div>
+        <div class="lookbook-grid">
+            <div class="lookbook-item lookbook-large reveal">
+                <div class="lookbook-img-wrap">
+                    <img src="images/hero.png" alt="Lookbook Editorial 1" class="lookbook-img" loading="lazy">
+                </div>
+                <div class="lookbook-text">
+                    <span class="lookbook-num">01</span>
+                    <h3 class="lookbook-title">NIGHT<br>FREQUENCY</h3>
+                    <p class="lookbook-desc">RAW SIGNALS FROM THE UNDERGROUND</p>
+                </div>
+            </div>
+            <div class="lookbook-item reveal">
+                <div class="lookbook-img-wrap">
+                    <img src="images/product_jacket.png" alt="Lookbook Editorial 2" class="lookbook-img" loading="lazy">
+                </div>
+                <div class="lookbook-text">
+                    <span class="lookbook-num">02</span>
+                    <h3 class="lookbook-title">COLD<br>STRUCTURE</h3>
+                </div>
+            </div>
+            <div class="lookbook-item reveal">
+                <div class="lookbook-img-wrap">
+                    <img src="images/product_boots.png" alt="Lookbook Editorial 3" class="lookbook-img" loading="lazy">
+                </div>
+                <div class="lookbook-text">
+                    <span class="lookbook-num">03</span>
+                    <h3 class="lookbook-title">GROUND<br>LEVEL</h3>
+                </div>
+            </div>
+            <div class="lookbook-item lookbook-wide reveal">
+                <div class="lookbook-img-wrap">
+                    <img src="images/product_hoodie.png" alt="Lookbook Editorial 4" class="lookbook-img" loading="lazy">
+                </div>
+                <div class="lookbook-text">
+                    <span class="lookbook-num">04</span>
+                    <h3 class="lookbook-title">STEALTH<br>MODE</h3>
+                    <p class="lookbook-desc">ENGINEERED FOR THE DARK</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <div class="about-left reveal">
+                <span class="section-tag">003</span>
+                <h2 class="about-title">THE<br>FREQUENCY</h2>
+                <div class="about-line"></div>
+            </div>
+            <div class="about-right reveal" data-delay="0.2">
+                <p class="about-text">
+                    WAV.FORM IS THE COLLISION OF SOUND AND FABRIC. BORN FROM LATE-NIGHT STUDIO SESSIONS AND UNDERGROUND FREQUENCIES, EACH PIECE IS ENGINEERED WITH THE SAME PRECISION AS A PERFECTLY MIXED BEAT.
+                </p>
+                <p class="about-text">
+                    WE DON'T FOLLOW TRENDS — WE SET THE TEMPO. OUR TECHWEAR IS DESIGNED FOR THOSE WHO MOVE THROUGH THE NIGHT, WHO UNDERSTAND THAT STYLE IS A WAVEFORM — STRUCTURED, INTENTIONAL, AND HEAVY.
+                </p>
+                <p class="about-text accent-text">
+                    85 BPM. COLD. STRUCTURED. RELENTLESS.
+                </p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-num" data-count="85">0</span>
+                        <span class="stat-label">BPM</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num" data-count="26">0</span>
+                        <span class="stat-label">PIECES</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num" data-count="1">0</span>
+                        <span class="stat-label">FREQUENCY</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-marquee">
+            <div class="marquee-track marquee-reverse">
+                <span>WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE — WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE —&nbsp;</span>
+                <span>WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE — WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE —&nbsp;</span>
+            </div>
+        </div>
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="#" class="footer-logo">WAV<span class="accent">.</span>FORM</a>
+                <p class="footer-tagline">WHERE SOUND MEETS STRUCTURE</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>NAVIGATE</h4>
+                    <a href="#products">PRODUCTS</a>
+                    <a href="#lookbook">LOOKBOOK</a>
+                    <a href="#about">ABOUT</a>
+                </div>
+                <div class="footer-col">
+                    <h4>CONNECT</h4>
+                    <a href="#">INSTAGRAM</a>
+                    <a href="#">SOUNDCLOUD</a>
+                    <a href="#">DISCORD</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 WAV.FORM. ALL RIGHTS RESERVED.</span>
+        </div>
+    </footer>
+
+    <!-- Audio element (placeholder) -->
+    <audio id="bgAudio" loop preload="none">
+        <!-- User can add their own beat here -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
