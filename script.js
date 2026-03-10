@@ -372,27 +372,100 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Checkout button
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-        if (cart.length > 0) {
-            // Flash animation
-            const btn = document.getElementById('checkoutBtn');
-            btn.textContent = 'PROCESSING...';
+    // ─── Checkout Flow (Maps, Logistics, Payment) ─
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const checkoutOverlay = document.getElementById('checkoutOverlay');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const checkoutClose = document.getElementById('checkoutClose');
+    
+    // Steps
+    const step1 = document.getElementById('chkStep1');
+    const step2 = document.getElementById('chkStep2');
+    const step3 = document.getElementById('chkStep3');
+    const step4 = document.getElementById('chkStep4');
+
+    // Make sure we have the modal elements before binding
+    if (checkoutBtn && checkoutModal) {
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length > 0) {
+                closeCart(); // custom function from before
+                checkoutOverlay.classList.add('active');
+                checkoutModal.classList.add('active');
+                
+                // Reset to step 1
+                step1.classList.add('active');
+                step2.classList.remove('active');
+                step3.classList.remove('active');
+                step4.classList.remove('active');
+            }
+        });
+
+        const closeCheckout = () => {
+            checkoutOverlay.classList.remove('active');
+            checkoutModal.classList.remove('active');
+        };
+
+        checkoutClose.addEventListener('click', closeCheckout);
+        checkoutOverlay.addEventListener('click', closeCheckout);
+
+        // Step 1 -> Step 2
+        document.getElementById('chkBtnNext1').addEventListener('click', () => {
+            const addr = document.getElementById('chkAddress').value;
+            if(!addr) return alert('ENTER DROP ZONE ADDRESS');
+            step1.classList.remove('active');
+            step2.classList.add('active');
+        });
+
+        // Step 2 -> Step 3
+        document.getElementById('chkBtnNext2').addEventListener('click', () => {
+            step2.classList.remove('active');
+            step3.classList.add('active');
+        });
+
+        // Step 2 Back -> Step 1
+        document.getElementById('chkBtnBack1').addEventListener('click', () => {
+            step2.classList.remove('active');
+            step1.classList.add('active');
+        });
+
+        // Step 3 Back -> Step 2
+        document.getElementById('chkBtnBack2').addEventListener('click', () => {
+            step3.classList.remove('active');
+            step2.classList.add('active');
+        });
+
+        // Payment Tabs Logic
+        const payTabs = document.querySelectorAll('.chk-pay-tab');
+        const payContents = document.querySelectorAll('.chk-pay-content');
+
+        payTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                payTabs.forEach(t => t.classList.remove('active'));
+                payContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById('pay-' + tab.dataset.pay).classList.add('active');
+            });
+        });
+
+        // Step 3 -> Success (Step 4)
+        document.getElementById('chkBtnFinal').addEventListener('click', () => {
+            const btn = document.getElementById('chkBtnFinal');
+            btn.textContent = 'VERIFYING...';
             setTimeout(() => {
-                btn.textContent = 'ORDER CONFIRMED ✓';
-                btn.style.background = '#1a1a1a';
-                btn.style.color = '#4caf50';
-                setTimeout(() => {
-                    cart.length = 0;
-                    updateCartUI();
-                    closeCart();
-                    btn.textContent = 'CHECKOUT';
-                    btn.style.background = '';
-                    btn.style.color = '';
-                }, 1500);
-            }, 1000);
-        }
-    });
+                step3.classList.remove('active');
+                step4.classList.add('active');
+                
+                // Clear cart on success
+                cart.length = 0;
+                localStorage.setItem('wavform_cart', JSON.stringify(cart));
+                updateCartUI();
+            }, 1500);
+        });
+
+        // Success -> Close
+        document.getElementById('chkBtnDone').addEventListener('click', closeCheckout);
+    }
 
     // ─── Audio / Mood Toggle ────────────────
     const moodBtn = document.getElementById('moodBtn');

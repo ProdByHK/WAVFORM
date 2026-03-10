@@ -91,6 +91,113 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div class="checkout-overlay" id="checkoutOverlay"></div>
+    <div class="checkout-modal" id="checkoutModal">
+        <button class="checkout-close" id="checkoutClose">&times;</button>
+        
+        <!-- Step 1: Location -->
+        <div class="checkout-step active" id="chkStep1">
+            <h3 class="chk-step-title">01 // LOCATION</h3>
+            <p class="chk-step-desc">PIN YOUR DROP ZONE (SIMULATED MAPS API)</p>
+            <div class="chk-map-container">
+                <div class="chk-map-overlay"></div>
+                <!-- CSS grid simulating a brutalist map texture -->
+                <div class="chk-map-grid"></div>
+                <div class="chk-map-pin"></div>
+            </div>
+            <div class="chk-input-group">
+                <input type="text" class="chk-input" id="chkAddress" placeholder="ENTER FULL ADDRESS..." value="JL. JEND. SUDIRMAN KAV 21, JAKARTA">
+            </div>
+            <button class="chk-btn" id="chkBtnNext1">CONFIRM LOCATION</button>
+        </div>
+
+        <!-- Step 2: Logistics -->
+        <div class="checkout-step" id="chkStep2">
+            <h3 class="chk-step-title">02 // LOGISTICS</h3>
+            <p class="chk-step-desc">SELECT CARRIER (SIMULATED SHIPPING API)</p>
+            <div class="chk-shipping-options">
+                <label class="chk-shipping-item">
+                    <input type="radio" name="shipping" value="jne" checked>
+                    <div class="chk-shipping-box">
+                        <span class="chk-carrier">JNE YES</span>
+                        <span class="chk-time">1 DAY</span>
+                        <span class="chk-cost">$5</span>
+                    </div>
+                </label>
+                <label class="chk-shipping-item">
+                    <input type="radio" name="shipping" value="sicepat">
+                    <div class="chk-shipping-box">
+                        <span class="chk-carrier">SiCepat BEST</span>
+                        <span class="chk-time">1-2 DAYS</span>
+                        <span class="chk-cost">$4</span>
+                    </div>
+                </label>
+                <label class="chk-shipping-item">
+                    <input type="radio" name="shipping" value="jnt">
+                    <div class="chk-shipping-box">
+                        <span class="chk-carrier">J&T Express</span>
+                        <span class="chk-time">2-3 DAYS</span>
+                        <span class="chk-cost">$3</span>
+                    </div>
+                </label>
+            </div>
+            <button class="chk-btn" id="chkBtnNext2">PROCEED TO PAY</button>
+            <button class="chk-btn-back" id="chkBtnBack1">← BACK</button>
+        </div>
+
+        <!-- Step 3: Payment Gateway -->
+        <div class="checkout-step" id="chkStep3">
+            <h3 class="chk-step-title">03 // PAYMENT</h3>
+            <p class="chk-step-desc">SECURE TRANSFER (SIMULATED MIDTRANS API)</p>
+            <div class="chk-payment-tabs">
+                <button class="chk-pay-tab active" data-pay="qris">QRIS</button>
+                <button class="chk-pay-tab" data-pay="va">VIRTUAL ACCT</button>
+                <button class="chk-pay-tab" data-pay="cc">CREDIT CARD</button>
+            </div>
+            
+            <div class="chk-pay-content active" id="pay-qris">
+                <div class="chk-qris-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WAVFORM2026&bgcolor=141414&color=ff2d2d" alt="QRIS Code" class="chk-qrcode">
+                    <p class="chk-pay-note">SCAN WITH ANY SUPPORTED BANK OR E-WALLET</p>
+                </div>
+            </div>
+            
+            <div class="chk-pay-content" id="pay-va">
+                <div class="chk-va-box">
+                    <span class="chk-va-bank">BCA VIRTUAL ACCOUNT</span>
+                    <span class="chk-va-num">3901 8829 1010 442</span>
+                    <button class="chk-copy-btn">COPY</button>
+                </div>
+            </div>
+            
+            <div class="chk-pay-content" id="pay-cc">
+                <div class="chk-input-group">
+                    <input type="text" class="chk-input" placeholder="CARD NUMBER">
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="chk-input-group" style="flex:1;">
+                        <input type="text" class="chk-input" placeholder="MM/YY">
+                    </div>
+                    <div class="chk-input-group" style="flex:1;">
+                        <input type="text" class="chk-input" placeholder="CVV">
+                    </div>
+                </div>
+            </div>
+
+            <button class="chk-btn" id="chkBtnFinal">AUTHORIZE PAYMENT</button>
+            <button class="chk-btn-back" id="chkBtnBack2">← BACK</button>
+        </div>
+        
+        <!-- Step 4: Success -->
+        <div class="checkout-step" id="chkStep4">
+            <div class="chk-success-icon">✓</div>
+            <h3 class="chk-step-title" style="margin-top:1rem; text-align:center;">PAYMENT AUTHORIZED</h3>
+            <p class="chk-step-desc" style="text-align:center;">TRANSACTION ID: WAV26-X99L<br>YOUR GEAR IS BEING PREPARED.</p>
+            <button class="chk-btn" id="chkBtnDone" style="margin-top:2rem;">RETURN TO BASE</button>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-bg">
