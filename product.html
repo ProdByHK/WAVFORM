@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV.FORM — Product</title>
+    <meta name="description" content="WAV.FORM — Dark techwear clothing for the underground.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+    <div class="scanlines"></div>
+
+    <!-- Navigation -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">WAV<span class="accent">.</span>FORM</a>
+            <ul class="nav-links">
+                <li><a href="index.html#products" class="nav-link">PRODUCTS</a></li>
+                <li><a href="index.html#lookbook" class="nav-link">LOOKBOOK</a></li>
+                <li><a href="index.html#about" class="nav-link">ABOUT</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 01-8 0"></path>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <a href="index.html#products" class="mobile-link">PRODUCTS</a>
+            <a href="index.html#lookbook" class="mobile-link">LOOKBOOK</a>
+            <a href="index.html#about" class="mobile-link">ABOUT</a>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3 class="cart-title">YOUR BAG</h3>
+            <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">
+                <p>YOUR BAG IS EMPTY</p>
+                <span>ADD SOME HEAT</span>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">CHECKOUT</button>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="pdp-breadcrumb">
+        <a href="index.html">HOME</a>
+        <span class="breadcrumb-sep">→</span>
+        <a href="index.html#products">PRODUCTS</a>
+        <span class="breadcrumb-sep">→</span>
+        <span id="breadcrumbName">PRODUCT</span>
+    </div>
+
+    <!-- Product Detail -->
+    <section class="pdp" id="pdp">
+        <div class="pdp-inner">
+            <!-- Left: Image Gallery -->
+            <div class="pdp-gallery">
+                <div class="pdp-main-img-wrap">
+                    <img src="" alt="" class="pdp-main-img" id="pdpMainImg">
+                    <span class="product-tag pdp-tag" id="pdpTag" style="display:none;"></span>
+                </div>
+            </div>
+
+            <!-- Right: Product Info -->
+            <div class="pdp-info">
+                <span class="pdp-category">WAV.FORM TECHWEAR</span>
+                <h1 class="pdp-name" id="pdpName"></h1>
+                <div class="pdp-price-row">
+                    <span class="pdp-price" id="pdpPrice"></span>
+                    <span class="pdp-shipping-note">FREE SHIPPING OVER $300</span>
+                </div>
+
+                <!-- Size Selector -->
+                <div class="pdp-sizes">
+                    <span class="pdp-label">SELECT SIZE</span>
+                    <div class="pdp-size-options" id="pdpSizes"></div>
+                </div>
+
+                <!-- Add to Cart -->
+                <div class="pdp-actions">
+                    <button class="pdp-add-btn" id="pdpAddBtn">
+                        <span>ADD TO BAG</span>
+                    </button>
+                </div>
+
+                <!-- Expandable: Description -->
+                <div class="pdp-accordion">
+                    <button class="pdp-accordion-header active" data-target="descPanel">
+                        <span>DESCRIPTION & FIT</span>
+                        <span class="accordion-icon">−</span>
+                    </button>
+                    <div class="pdp-accordion-panel active" id="descPanel">
+                        <p class="pdp-desc" id="pdpDesc"></p>
+                        <div class="pdp-details-grid" id="pdpDetails"></div>
+                    </div>
+                </div>
+
+                <div class="pdp-accordion">
+                    <button class="pdp-accordion-header" data-target="shipPanel">
+                        <span>SHIPPING</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="pdp-accordion-panel" id="shipPanel">
+                        <div class="pdp-shipping-info">
+                            <div class="ship-row">
+                                <span class="ship-label">DELIVERY TIME</span>
+                                <span class="ship-value">3-5 WORKING DAYS</span>
+                            </div>
+                            <div class="ship-row">
+                                <span class="ship-label">SHIPPING</span>
+                                <span class="ship-value">FREE OVER $300</span>
+                            </div>
+                            <div class="ship-row">
+                                <span class="ship-label">RETURNS</span>
+                                <span class="ship-value">14-DAY RETURN POLICY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="pdp-related">
+        <div class="pdp-related-inner">
+            <h2 class="pdp-related-title">YOU MIGHT ALSO LIKE</h2>
+            <div class="pdp-related-grid" id="relatedGrid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-marquee">
+            <div class="marquee-track marquee-reverse">
+                <span>WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE — WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE —&nbsp;</span>
+                <span>WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE — WAV.FORM — DARK TECHWEAR — UNDERGROUND — SOUND MEETS STRUCTURE —&nbsp;</span>
+            </div>
+        </div>
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="index.html" class="footer-logo">WAV<span class="accent">.</span>FORM</a>
+                <p class="footer-tagline">WHERE SOUND MEETS STRUCTURE</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>NAVIGATE</h4>
+                    <a href="index.html#products">PRODUCTS</a>
+                    <a href="index.html#lookbook">LOOKBOOK</a>
+                    <a href="index.html#about">ABOUT</a>
+                </div>
+                <div class="footer-col">
+                    <h4>CONNECT</h4>
+                    <a href="#">INSTAGRAM</a>
+                    <a href="#">SOUNDCLOUD</a>
+                    <a href="#">DISCORD</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 WAV.FORM. ALL RIGHTS RESERVED.</span>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+</html>

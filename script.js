@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── Shopping Cart ──────────────────────
-    const cart = [];
+    const cart = JSON.parse(localStorage.getItem('wavform_cart') || '[]');
     const cartBtn = document.getElementById('cartBtn');
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
@@ -199,42 +199,100 @@ document.addEventListener('DOMContentLoaded', () => {
     cartClose.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
-    // Add to Cart buttons
-    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const card = btn.closest('.product-card');
-            const name = card.dataset.name;
-            const price = parseInt(card.dataset.price);
-            const img = card.dataset.img;
+    // ─── Render Products Dynamically ────────
+    const productsGrid = document.getElementById('productsGrid');
+    if (productsGrid) {
+        function renderProducts() {
+            const allProducts = getProducts(); // from products.js
+            productsGrid.innerHTML = '';
             
-            addToCart(name, price, img);
-            
-            // Button feedback animation
-            btn.textContent = 'ADDED ✓';
-            btn.style.background = '#1a1a1a';
-            btn.style.color = '#4caf50';
-            setTimeout(() => {
-                btn.textContent = 'ADD TO BAG';
-                btn.style.background = '';
-                btn.style.color = '';
-            }, 1200);
-        });
-    });
+            allProducts.forEach(product => {
+                const card = document.createElement('a');
+                card.className = 'product-card-link reveal';
+                card.href = `product.html?slug=${product.slug}`;
+                card.innerHTML = `
+                    <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img="${product.image}">
+                        <div class="product-img-wrap">
+                            <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
+                            <div class="product-overlay">
+                                <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
+                            </div>
+                            ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <span class="product-price">$${product.price}</span>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
 
-    function addToCart(name, price, img) {
-        const existing = cart.find(item => item.name === name);
+            // Re-bind add to cart buttons for new dynamic cards
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent navigating to detail page
+                    e.stopPropagation();
+                    const card = btn.closest('.product-card');
+                    const name = card.dataset.name;
+                    const price = parseInt(card.dataset.price);
+                    const img = card.dataset.img;
+                    
+                    // Default to first size available for the product if adding from grid
+                    const productData = getProducts().find(p => p.name === name);
+                    const defaultSize = productData && productData.sizes.length > 0 ? productData.sizes[0] : '';
+                    
+                    addToCart(name, price, img, defaultSize);
+                    
+                    // Button feedback animation
+                    btn.textContent = 'ADDED ✓';
+                    btn.style.background = '#1a1a1a';
+                    btn.style.color = '#4caf50';
+                    setTimeout(() => {
+                        btn.textContent = 'ADD TO BAG';
+                        btn.style.background = '';
+                        btn.style.color = '';
+                    }, 1200);
+                });
+            });
+
+            // Re-bind hover effect for new dynamic cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                    card.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${y * -5}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+                });
+                card.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                card.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+            
+            // Re-init scroll reveals for new cards
+            initRevealAnimations();
+        }
+        
+        renderProducts();
+    }
+
+    function addToCart(name, price, img, size = '') {
+        const existing = cart.find(item => item.name === name && item.size === size);
         if (existing) {
             existing.qty++;
         } else {
-            cart.push({ name, price, img, qty: 1 });
+            cart.push({ name, price, img, size, qty: 1 });
         }
+        localStorage.setItem('wavform_cart', JSON.stringify(cart));
         updateCartUI();
         openCart();
     }
 
     function removeFromCart(index) {
         cart.splice(index, 1);
+        localStorage.setItem('wavform_cart', JSON.stringify(cart));
         updateCartUI();
     }
 
@@ -243,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cart[index].qty <= 0) {
             removeFromCart(index);
         } else {
+            localStorage.setItem('wavform_cart', JSON.stringify(cart));
             updateCartUI();
         }
     }
@@ -263,7 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cart.length === 0) {
             cartEmpty.style.display = 'block';
             cartFooter.style.display = 'none';
-            // Remove cart items but keep empty message
             const items = cartItems.querySelectorAll('.cart-item');
             items.forEach(item => item.remove());
         } else {
@@ -282,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.innerHTML = `
                     <img src="${item.img}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-name">${item.name}${item.size ? ` — ${item.size}` : ''}</div>
                         <div class="cart-item-price">$${item.price}</div>
                         <div class="cart-item-qty">
                             <button class="qty-btn" data-index="${index}" data-action="minus">−</button>

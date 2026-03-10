@@ -135,87 +135,8 @@
             <h2 class="section-title reveal">PRODUCTS</h2>
             <div class="section-line reveal"></div>
         </div>
-        <div class="products-grid">
-            <div class="product-card reveal" data-name="PHANTOM TACTICAL JACKET" data-price="320" data-img="images/product_jacket.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_jacket.png" alt="Phantom Tactical Jacket" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                    <span class="product-tag">NEW</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">PHANTOM TACTICAL JACKET</h3>
-                    <span class="product-price">$320</span>
-                </div>
-            </div>
-
-            <div class="product-card reveal" data-name="SIGNAL CARGO PANTS" data-price="245" data-img="images/product_pants.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_pants.png" alt="Signal Cargo Pants" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">SIGNAL CARGO PANTS</h3>
-                    <span class="product-price">$245</span>
-                </div>
-            </div>
-
-            <div class="product-card reveal" data-name="MOLLE TACTICAL VEST" data-price="280" data-img="images/product_vest.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_vest.png" alt="MOLLE Tactical Vest" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                    <span class="product-tag">CORE</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">MOLLE TACTICAL VEST</h3>
-                    <span class="product-price">$280</span>
-                </div>
-            </div>
-
-            <div class="product-card reveal" data-name="STEALTH TECH HOODIE" data-price="195" data-img="images/product_hoodie.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_hoodie.png" alt="Stealth Tech Hoodie" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">STEALTH TECH HOODIE</h3>
-                    <span class="product-price">$195</span>
-                </div>
-            </div>
-
-            <div class="product-card reveal" data-name="GROUND ZERO BOOTS" data-price="385" data-img="images/product_boots.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_boots.png" alt="Ground Zero Boots" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                    <span class="product-tag">LIMITED</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">GROUND ZERO BOOTS</h3>
-                    <span class="product-price">$385</span>
-                </div>
-            </div>
-
-            <div class="product-card reveal" data-name="FREQ SLING BAG" data-price="145" data-img="images/product_vest.png">
-                <div class="product-img-wrap">
-                    <img src="images/product_vest.png" alt="Freq Sling Bag" class="product-img" loading="lazy">
-                    <div class="product-overlay">
-                        <button class="add-to-cart-btn" aria-label="Add to cart">ADD TO BAG</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">FREQ SLING BAG</h3>
-                    <span class="product-price">$145</span>
-                </div>
-            </div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products rendered dynamically from products.js -->
         </div>
     </section>
 
@@ -342,6 +263,7 @@
         <!-- User can add their own beat here -->
     </audio>
 
+    <script src="products.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

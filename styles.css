@@ -1445,3 +1445,438 @@ img {
         cursor: auto;
     }
 }
+
+/* =============================================
+   PRODUCT DETAIL PAGE (PDP)
+   ============================================= */
+
+/* --- Product card as link --- */
+.product-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Breadcrumb --- */
+.pdp-breadcrumb {
+    padding: 6rem 6rem 1rem;
+    max-width: 1440px;
+    margin: 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.pdp-breadcrumb a {
+    color: var(--text-muted);
+    transition: color 0.3s;
+}
+
+.pdp-breadcrumb a:hover {
+    color: var(--white);
+}
+
+.breadcrumb-sep {
+    margin: 0 0.8rem;
+    color: var(--border);
+}
+
+/* --- PDP Layout --- */
+.pdp {
+    padding: 2rem 6rem 6rem;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pdp-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* --- Gallery --- */
+.pdp-gallery {
+    position: sticky;
+    top: 6rem;
+}
+
+.pdp-main-img-wrap {
+    position: relative;
+    background: var(--bg-card);
+    overflow: hidden;
+    aspect-ratio: 3/4;
+}
+
+.pdp-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+}
+
+.pdp-main-img-wrap:hover .pdp-main-img {
+    transform: scale(1.05);
+}
+
+.pdp-tag {
+    z-index: 2;
+}
+
+/* --- Product Info --- */
+.pdp-info {
+    padding-top: 1rem;
+}
+
+.pdp-category {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.pdp-name {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 0.05em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.pdp-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.pdp-price {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.pdp-shipping-note {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+/* --- Size Selector --- */
+.pdp-sizes {
+    margin-bottom: 2rem;
+}
+
+.pdp-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.pdp-size-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.pdp-size-btn {
+    min-width: 50px;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+}
+
+.pdp-size-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--white);
+}
+
+.pdp-size-btn.active {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+}
+
+/* --- Add to Bag Button --- */
+.pdp-actions {
+    margin-bottom: 2.5rem;
+}
+
+.pdp-add-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--accent);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    border: 2px solid var(--accent);
+    transition: all 0.3s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+}
+
+.pdp-add-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    transform: translateX(-101%);
+    transition: transform 0.4s var(--ease-out);
+}
+
+.pdp-add-btn:hover::before {
+    transform: translateX(0);
+}
+
+.pdp-add-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.pdp-add-btn:hover {
+    color: var(--black);
+}
+
+/* --- Accordion --- */
+.pdp-accordion {
+    border-top: 1px solid var(--border);
+}
+
+.pdp-accordion:last-child {
+    border-bottom: 1px solid var(--border);
+}
+
+.pdp-accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.3rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    transition: color 0.3s;
+}
+
+.pdp-accordion-header:hover,
+.pdp-accordion-header.active {
+    color: var(--white);
+}
+
+.accordion-icon {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.pdp-accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s var(--ease-out), padding 0.4s;
+}
+
+.pdp-accordion-panel.active {
+    max-height: 500px;
+    padding-bottom: 1.5rem;
+}
+
+.pdp-desc {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.pdp-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.detail-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.detail-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    min-width: 80px;
+}
+
+.detail-value {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+/* --- Shipping Info --- */
+.pdp-shipping-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ship-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ship-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.ship-value {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+/* --- Related Products --- */
+.pdp-related {
+    background: var(--bg-primary);
+    padding: 4rem 0 6rem;
+    border-top: 1px solid var(--border);
+}
+
+.pdp-related-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 6rem;
+}
+
+.pdp-related-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 3rem;
+}
+
+.pdp-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+}
+
+.pdp-related-card {
+    background: var(--bg-card);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.4s var(--ease-out);
+    overflow: hidden;
+}
+
+.pdp-related-card:hover {
+    z-index: 2;
+}
+
+.pdp-related-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+}
+
+.pdp-related-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: all 0.6s var(--ease-out);
+    transform: scale(1.02);
+}
+
+.pdp-related-card:hover .pdp-related-img {
+    filter: grayscale(0%);
+    transform: scale(1.08);
+}
+
+.pdp-related-info {
+    padding: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-top: 1px solid var(--border);
+}
+
+.pdp-related-name {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    font-weight: 400;
+    max-width: 60%;
+}
+
+.pdp-related-price {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--white);
+}
+
+/* --- PDP Responsive --- */
+@media (max-width: 1024px) {
+    .pdp {
+        padding: 2rem 3rem 4rem;
+    }
+    .pdp-inner {
+        gap: 3rem;
+    }
+    .pdp-breadcrumb {
+        padding: 6rem 3rem 1rem;
+    }
+    .pdp-related-inner {
+        padding: 0 3rem;
+    }
+    .pdp-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .pdp {
+        padding: 1rem 1.5rem 3rem;
+    }
+    .pdp-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .pdp-gallery {
+        position: static;
+    }
+    .pdp-breadcrumb {
+        padding: 5rem 1.5rem 1rem;
+    }
+    .pdp-related-inner {
+        padding: 0 1.5rem;
+    }
+    .pdp-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

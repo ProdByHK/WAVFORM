@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV.FORM — Base Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Admin-specific overrides */
+        body { background: #0a0a0a; color: #fff; }
+        .admin-nav { display: flex; justify-content: space-between; padding: 2rem 4rem; border-bottom: 1px solid #333; }
+        .admin-nav-logo { font-family: 'Bebas Neue', display; font-size: 1.5rem; text-decoration: none; color: #fff; letter-spacing: 0.1em; }
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        
+        /* Login Gate */
+        #loginGate { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; }
+        #loginGate h2 { font-family: 'Bebas Neue', display; font-size: 3rem; margin-bottom: 2rem; letter-spacing: 0.1em; }
+        #loginGate input { padding: 1rem; background: transparent; border: 1px solid #333; color: #fff; font-family: 'Space Mono', monospace; width: 300px; font-size: 1rem; margin-bottom: 1rem; text-align: center; }
+        #loginGate input:focus { outline: none; border-color: #ff3333; }
+        #loginGate button { padding: 1rem 2rem; background: #fff; color: #000; border: none; font-family: 'Bebas Neue', display; font-size: 1.2rem; cursor: pointer; letter-spacing: 0.1em; transition: 0.3s; }
+        #loginGate button:hover { background: #ff3333; color: #fff; }
+        #loginError { color: #ff3333; font-family: 'Space Mono', monospace; font-size: 0.8rem; margin-top: 1rem; display: none; }
+
+        /* Dashboard */
+        #adminDashboard { display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+        .admin-title { font-family: 'Bebas Neue', display; font-size: 3rem; margin: 0; letter-spacing: 0.05em; }
+        .btn-admin { padding: 0.8rem 1.5rem; background: #ff3333; color: #fff; border: none; font-family: 'Space Mono', monospace; font-size: 0.8rem; cursor: pointer; transition: 0.3s; letter-spacing: 0.1em; }
+        .btn-admin:hover { background: #fff; color: #000; }
+
+        /* Table */
+        .admin-table { width: 100%; border-collapse: collapse; font-family: 'Space Mono', monospace; font-size: 0.85rem; }
+        .admin-table th, .admin-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #222; }
+        .admin-table th { color: #888; letter-spacing: 0.1em; font-weight: normal; }
+        .admin-table td img { width: 40px; height: 50px; object-fit: cover; vertical-align: middle; margin-right: 1rem; filter: grayscale(100%); }
+        .table-actions { display: flex; gap: 1rem; }
+        .table-actions button { background: none; border: none; color: #888; cursor: pointer; font-family: 'Space Mono', monospace; text-decoration: underline; transition: color 0.2s; }
+        .table-actions button:hover { color: #fff; }
+        .btn-delete:hover { color: #ff3333 !important; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: flex-start; z-index: 100; overflow-y: auto; padding: 4rem 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: #111; width: 100%; max-width: 600px; border: 1px solid #333; }
+        .modal-header { display: flex; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid #333; }
+        .modal-title { font-family: 'Bebas Neue', display; font-size: 2rem; margin: 0; letter-spacing: 0.05em; }
+        .modal-close { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; font-family: 'Space Mono', monospace; }
+        .modal-body { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-label { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #888; letter-spacing: 0.1em; }
+        .form-input { padding: 1rem; background: #0a0a0a; border: 1px solid #333; color: #fff; font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+        .form-input:focus { outline: none; border-color: #ff3333; }
+        textarea.form-input { min-height: 100px; resize: vertical; }
+        
+        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid #333; display: flex; justify-content: flex-end; gap: 1rem; }
+        .btn-cancel { padding: 0.8rem 1.5rem; background: transparent; color: #fff; border: 1px solid #333; font-family: 'Space Mono', monospace; font-size: 0.8rem; cursor: pointer; }
+        .btn-save { padding: 0.8rem 1.5rem; background: #fff; color: #000; border: none; font-family: 'Space Mono', monospace; font-size: 0.8rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav class="admin-nav">
+        <a href="index.html" class="admin-nav-logo">WAV<span class="accent">.</span>FORM // ADMIN</a>
+        <a href="index.html" style="color:#888; font-family:'Space Mono'; text-decoration:none; font-size:0.8rem;">← BACK TO SITE</a>
+    </nav>
+
+    <!-- Login Gate -->
+    <div id="loginGate">
+        <h2>ENTER OVERRIDE CODE</h2>
+        <input type="password" id="adminPass" placeholder="PASSWORD" autofocus>
+        <button id="loginBtn">ACCESS SYSTEM</button>
+        <div id="loginError">ACCESS DENIED.</div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminDashboard">
+        <div class="admin-header">
+            <h1 class="admin-title">BASE CONTROL</h1>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-cancel" id="resetBtn" style="font-size: 0.7rem;">RESET TO DEFAULT DB</button>
+                <button class="btn-admin" id="addNewBtn">+ NEW ASSET</button>
+            </div>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ITEM</th>
+                    <th>SLUG</th>
+                    <th>PRICE</th>
+                    <th>STYLE TAG</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit/Add Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">ADD NEW ASSET</h3>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="formSlug">
+                
+                <div class="form-group">
+                    <label class="form-label">PRODUCT NAME</label>
+                    <input type="text" class="form-input" id="formName" placeholder="e.g. TACTICAL CARGO V2">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">PRICE (USD)</label>
+                        <input type="number" class="form-input" id="formPrice" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">TAG (OPTIONAL)</label>
+                        <input type="text" class="form-input" id="formTag" placeholder="NEW, CORE, LIMITED">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">IMAGE PATH OR URL</label>
+                    <input type="text" class="form-input" id="formImage" placeholder="images/filename.png or https://...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">SIZES (COMMA SEPARATED)</label>
+                    <input type="text" class="form-input" id="formSizes" placeholder="S, M, L, XL">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">MAIN DESCRIPTION</label>
+                    <textarea class="form-input" id="formDesc" placeholder="Enter product description here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">MATERIAL</label>
+                    <input type="text" class="form-input" id="formMaterial" placeholder="100% Cotton">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">FIT PROFILE</label>
+                    <input type="text" class="form-input" id="formFit" placeholder="Oversized drop shoulder">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CARE INSTRUCTIONS</label>
+                    <input type="text" class="form-input" id="formCare" placeholder="Machine wash cold">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="modalCancel">CANCEL</button>
+                <button class="btn-save" id="modalSave">SAVE ASSET</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Login Gate ---
+            const loginGate = document.getElementById('loginGate');
+            const dashboard = document.getElementById('adminDashboard');
+            const passInput = document.getElementById('adminPass');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginError = document.getElementById('loginError');
+
+            // Quick check if already logged in this session
+            if (sessionStorage.getItem('wavform_admin') === 'true') {
+                showDashboard();
+            }
+
+            function attemptLogin() {
+                if (passInput.value === 'wavform2026') {
+                    sessionStorage.setItem('wavform_admin', 'true');
+                    showDashboard();
+                } else {
+                    loginError.style.display = 'block';
+                    passInput.value = '';
+                }
+            }
+
+            loginBtn.addEventListener('click', attemptLogin);
+            passInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') attemptLogin();
+            });
+
+            function showDashboard() {
+                loginGate.style.display = 'none';
+                dashboard.style.display = 'block';
+                renderTable();
+            }
+
+            // --- Table Rendering ---
+            const tbody = document.getElementById('productTableBody');
+
+            function renderTable() {
+                const products = getProducts();
+                tbody.innerHTML = '';
+                
+                products.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <div style="display:flex; align-items:center;">
+                                <img src="${p.image}" alt="${p.name}">
+                                <strong>${p.name}</strong>
+                            </div>
+                        </td>
+                        <td style="color:#666;">${p.slug}</td>
+                        <td>$${p.price}</td>
+                        <td>${p.tag ? `<span style="background:#333; padding:0.2rem 0.5rem; font-size:0.7rem;">${p.tag}</span>` : '—'}</td>
+                        <td class="table-actions">
+                            <button onclick="window.editProduct('${p.slug}')">EDIT</button>
+                            <button class="btn-delete" onclick="window.deleteProductViaAdmin('${p.slug}')">DELETE</button>
+                            <button onclick="window.open('product.html?slug=${p.slug}','_blank')">VIEW ↗</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // --- Modal Logic ---
+            const modal = document.getElementById('productModal');
+            let isEditing = false;
+
+            document.getElementById('addNewBtn').addEventListener('click', () => {
+                isEditing = false;
+                document.getElementById('modalTitle').textContent = 'ADD NEW ASSET';
+                clearForm();
+                modal.classList.add('active');
+            });
+
+            document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('active'));
+            document.getElementById('modalCancel').addEventListener('click', () => modal.classList.remove('active'));
+
+            window.editProduct = (slug) => {
+                isEditing = true;
+                const p = getProductBySlug(slug);
+                document.getElementById('modalTitle').textContent = 'EDIT ASSET // ' + p.slug;
+                
+                document.getElementById('formSlug').value = p.slug;
+                document.getElementById('formName').value = p.name;
+                document.getElementById('formPrice').value = p.price;
+                document.getElementById('formTag').value = p.tag || '';
+                document.getElementById('formImage').value = p.image;
+                document.getElementById('formSizes').value = p.sizes.join(', ');
+                document.getElementById('formDesc').value = p.description;
+                document.getElementById('formMaterial').value = p.details?.material || '';
+                document.getElementById('formFit').value = p.details?.fit || '';
+                document.getElementById('formCare').value = p.details?.care || '';
+                
+                modal.classList.add('active');
+            };
+
+            window.deleteProductViaAdmin = (slug) => {
+                if(confirm('WARNING: Are you sure you want to permanently delete ' + slug + '?')) {
+                    deleteProduct(slug);
+                    renderTable();
+                }
+            };
+
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                if(confirm('CRITICAL WARNING: This will erase all custom products and restore the default 6 items. Proceed?')) {
+                    resetProducts();
+                    renderTable();
+                }
+            });
+
+            document.getElementById('modalSave').addEventListener('click', () => {
+                const pData = {
+                    name: document.getElementById('formName').value.trim(),
+                    price: parseFloat(document.getElementById('formPrice').value) || 0,
+                    image: document.getElementById('formImage').value.trim() || 'images/hero.png',
+                    tag: document.getElementById('formTag').value.trim(),
+                    description: document.getElementById('formDesc').value.trim(),
+                    sizes: document.getElementById('formSizes').value.split(',').map(s => s.trim()).filter(s => s),
+                    details: {
+                        material: document.getElementById('formMaterial').value.trim(),
+                        fit: document.getElementById('formFit').value.trim(),
+                        care: document.getElementById('formCare').value.trim()
+                    }
+                };
+
+                if (!pData.name) { alert('Product name required.'); return; }
+
+                if (isEditing) {
+                    const slug = document.getElementById('formSlug').value;
+                    updateProduct(slug, pData);
+                } else {
+                    addProduct(pData);
+                }
+
+                modal.classList.remove('active');
+                renderTable();
+            });
+
+            function clearForm() {
+                document.querySelectorAll('.form-input').forEach(i => i.value = '');
+                document.getElementById('formSlug').value = '';
+                document.getElementById('formSizes').value = 'S, M, L, XL';
+            }
+        });
+    </script>
+</body>
+</html>
